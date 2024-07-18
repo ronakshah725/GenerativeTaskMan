@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: GenerativeTaskMan
+
+#Database
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mydatabase
+    username: myuser
+    password: secret
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+#Server
+server:
+  port: 8081
+
