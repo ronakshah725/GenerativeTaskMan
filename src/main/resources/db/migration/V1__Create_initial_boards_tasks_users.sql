@@ -1,9 +1,10 @@
+
 CREATE TABLE IF NOT EXISTS users
 (
     id        BIGSERIAL PRIMARY KEY,
     name      VARCHAR(255) NOT NULL,
     email     VARCHAR(255) NOT NULL,
-    companyId BIGINT
+    company_id BIGINT NOT NULL
     );
 
 CREATE TABLE IF NOT EXISTS boards
@@ -33,18 +34,11 @@ CREATE TABLE IF NOT EXISTS tasks
     due_date    TIMESTAMP,
     status      VARCHAR(100) DEFAULT 'PENDING',
     lane_id     BIGINT       NOT NULL,
+    user_id     BIGINT       NOT NULL,
     created_at  TIMESTAMP    DEFAULT now(),
-    CONSTRAINT fk_lane FOREIGN KEY (lane_id) REFERENCES lanes (id) ON DELETE CASCADE
+    CONSTRAINT fk_lane FOREIGN KEY (lane_id) REFERENCES lanes (id) ON DELETE CASCADE,
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
     );
 
-CREATE TABLE IF NOT EXISTS tasks_assignments
-(
-    task_id       BIGINT NOT NULL,
-    user_id       BIGINT NOT NULL,
-    assigned_date TIMESTAMP DEFAULT now(),
-    PRIMARY KEY (task_id, user_id),
-    CONSTRAINT fk_task FOREIGN KEY (task_id) REFERENCES tasks (id) ON DELETE CASCADE,
-    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
-    );
 
 
